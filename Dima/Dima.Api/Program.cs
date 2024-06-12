@@ -29,65 +29,65 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapPost(
-    "/v1/categories",
-    (CreateCategoryRequest request, ICategoryHandler handler) 
-        => handler.CreateAsync(request))
-    .WithName("Categories: Create")
-    .WithSummary("Create new category")
-    .Produces<ResponseBase<Category?>>();
+//app.MapPost(
+//    "/v1/categories",
+//    (CreateCategoryRequest request, ICategoryHandler handler) 
+//        => handler.CreateAsync(request))
+//    .WithName("Categories: Create")
+//    .WithSummary("Create new category")
+//    .Produces<ResponseBase<Category?>>();
 
-app.MapPut(
-    "/v1/categories/{id}",
-    async (long id, UpdateCategoryRequest request, ICategoryHandler handler)
-        => {
-            request.Id = id;
-            return await handler.UpdateAsync(request);
-        })
-    .WithName("Categories: Update")
-    .WithSummary("Update category")
-    .Produces<ResponseBase<Category?>>();
+//app.MapPut(
+//    "/v1/categories/{id}",
+//    async (long id, UpdateCategoryRequest request, ICategoryHandler handler)
+//        => {
+//            request.Id = id;
+//            return await handler.UpdateAsync(request);
+//        })
+//    .WithName("Categories: Update")
+//    .WithSummary("Update category")
+//    .Produces<ResponseBase<Category?>>();
 
-app.MapDelete(
-    "/v1/categories/{id}",
-    async (long id, ICategoryHandler handler)
-        => {
-            var request  = new DeleteCategoryRequest
-            { 
-                Id = id
-            };
-            return await handler.DeleteAsync(request);
-        })
-    .WithName("Categories: Delete")
-    .WithSummary("Delete category")
-    .Produces<ResponseBase<Category?>>();
+//app.MapDelete(
+//    "/v1/categories/{id}",
+//    async (long id, ICategoryHandler handler)
+//        => {
+//            var request  = new DeleteCategoryRequest
+//            { 
+//                Id = id
+//            };
+//            return await handler.DeleteAsync(request);
+//        })
+//    .WithName("Categories: Delete")
+//    .WithSummary("Delete category")
+//    .Produces<ResponseBase<Category?>>();
 
-app.MapGet(
-    "/v1/categories",
-    async (ICategoryHandler handler)
-        => {
-            var request = new GetAllCategoryRequest
-            {
-                UserId = "teste@teste.com"
-            };
-            return await handler.GetAllAsync(request);
-        })
-    .WithName("Categories: GetAll")
-    .WithSummary("Get all categories by userid")
-    .Produces<PagedResponse<List<Category>?>>();
+//app.MapGet(
+//    "/v1/categories",
+//    async (ICategoryHandler handler)
+//        => {
+//            var request = new GetAllCategoryRequest
+//            {
+//                UserId = "teste@teste.com"
+//            };
+//            return await handler.GetAllAsync(request);
+//        })
+//    .WithName("Categories: GetAll")
+//    .WithSummary("Get all categories by userid")
+//    .Produces<PagedResponse<List<Category>?>>();
 
-app.MapGet(
-    "/v1/categories/{id}",
-    async (long id, ICategoryHandler handler)
-        => {
-            var request = new GetByIdCategoryRequest
-            {
-                Id = id
-            };
-            return await handler.GetByIdAsync(request);
-        })
-    .WithName("Categories: GetById")
-    .WithSummary("Get category by id")
-    .Produces<ResponseBase<Category?>>();
+//app.MapGet(
+//    "/v1/categories/{id}",
+//    async (long id, ICategoryHandler handler)
+//        => {
+//            var request = new GetByIdCategoryRequest
+//            {
+//                Id = id
+//            };
+//            return await handler.GetByIdAsync(request);
+//        })
+//    .WithName("Categories: GetById")
+//    .WithSummary("Get category by id")
+//    .Produces<ResponseBase<Category?>>();
 
 app.Run();
