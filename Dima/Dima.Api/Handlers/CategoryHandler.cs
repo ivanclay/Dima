@@ -55,20 +55,71 @@ public class CategoryHandler(AppDbContext context) : ICategoryHandler
             return new ResponseBase<Category?>(null, 500, "[ERRUPD000] Unable to update category");
         }
     }
-    
-    public Task<ResponseBase<Category?>> DeleteAsync(DeleteCategoryRequest request)
+
+    public async Task<ResponseBase<Category?>> DeleteAsync(DeleteCategoryRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var category = await context
+           .Categories
+           .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+            if (category is null)
+                return new ResponseBase<Category?>(null, 404, "Category not found.");
+
+            context.Categories.Remove(category);
+            await context.SaveChangesAsync();
+            return new ResponseBase<Category?>(category, message: "Category deleted successfully");
+        }
+        catch
+        {
+            return new ResponseBase<Category?>(null, 500, "[ERRUPD000] Unable to delete category");
+        }
+        
     }
 
-    public Task<ResponseBase<List<Category>>> GetAllAsync(GetAllCategoryRequest request)
+    public async Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoryRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var query = context
+                .Categories
+                .AsNoTracking()
+                .Where(x => x.UserId == request.UserId)
+                .OrderBy(x => x.Title);
+
+            var categories = await query
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
+
+            var count = await query.CountAsync();
+
+            return new PagedResponse<List<Category>>(categories, count, request.PageNumber, request.PageSize);
+        }
+        catch
+        {
+            return new PagedResponse<List<Category>>(null, 500, "[ERRGET000] Unable to retrieve categories");
+        }
     }
 
-    public Task<ResponseBase<Category?>> GetByIdAsync(GetByIdCategoryRequest request)
+    public async Task<ResponseBase<Category?>> GetByIdAsync(GetByIdCategoryRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var category = await context
+            .Categories
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+            return category is null
+                ? new ResponseBase<Category?>(null, 404, "Category not found")
+                : new ResponseBase<Category?>(category);
+        }
+        catch
+        {
+            return new ResponseBase<Category?>(null, 500, "[ERRGET000] Unable to retrieve category");
+        }
     }
 
 
