@@ -1,5 +1,9 @@
 using Dima.Api.Data;
+using Dima.Api.Handlers;
+using Dima.Core.Handlers;
 using Dima.Core.Models;
+using Dima.Core.Requests.Categories;
+using Dima.Core.Responses;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +22,7 @@ builder.Services.AddSwaggerGen(x =>
     x.CustomSchemaIds(n => n.FullName);
 });
 
-builder.Services.AddTransient<Handler>();
+builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 
 var app = builder.Build();
 
@@ -27,48 +31,63 @@ app.UseSwaggerUI();
 
 app.MapPost(
     "/v1/categories",
-    (Request request, Handler handler) 
-        => handler.handle(request))
+    (CreateCategoryRequest request, ICategoryHandler handler) 
+        => handler.CreateAsync(request))
     .WithName("Categories: Create")
     .WithSummary("Create new category")
-    .Produces<Response>();
+    .Produces<ResponseBase<Category?>>();
+
+app.MapPut(
+    "/v1/categories/{id}",
+    async (long id, UpdateCategoryRequest request, ICategoryHandler handler)
+        => {
+            request.Id = id;
+            return await handler.UpdateAsync(request);
+        })
+    .WithName("Categories: Update")
+    .WithSummary("Update category")
+    .Produces<ResponseBase<Category?>>();
+
+app.MapDelete(
+    "/v1/categories/{id}",
+    async (long id, ICategoryHandler handler)
+        => {
+            var request  = new DeleteCategoryRequest
+            { 
+                Id = id
+            };
+            return await handler.DeleteAsync(request);
+        })
+    .WithName("Categories: Delete")
+    .WithSummary("Delete category")
+    .Produces<ResponseBase<Category?>>();
+
+app.MapGet(
+    "/v1/categories",
+    async (ICategoryHandler handler)
+        => {
+            var request = new GetAllCategoryRequest
+            {
+                UserId = "teste@teste.com"
+            };
+            return await handler.GetAllAsync(request);
+        })
+    .WithName("Categories: GetAll")
+    .WithSummary("Get all categories by userid")
+    .Produces<PagedResponse<List<Category>?>>();
+
+app.MapGet(
+    "/v1/categories/{id}",
+    async (long id, ICategoryHandler handler)
+        => {
+            var request = new GetByIdCategoryRequest
+            {
+                Id = id
+            };
+            return await handler.GetByIdAsync(request);
+        })
+    .WithName("Categories: GetById")
+    .WithSummary("Get category by id")
+    .Produces<ResponseBase<Category?>>();
 
 app.Run();
-
-//REQUEST
-public class Request
-{
-    public string Title { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
-    //public DateTime CreatedAt { get; set; } = DateTime.Now;
-    //public int Type { get; set; }
-    //public decimal Amount { get; set; }
-    //public long CategoryId { get; set; }
-    //public string UserId { get; set; } = string.Empty;
-}
-//RESPONSE
-public class Response
-{
-    public long Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-}
-//HANDLER
-public class Handler(AppDbContext context)
-{
-    public Response handle(Request request)
-    {
-        var category = new Category
-        {
-            Title = request.Title,
-            Description = request.Description
-        };
-        context.Categories.Add(category);
-        context.SaveChanges();
-
-        return new Response
-        {
-            Id=category.Id,
-            Title = category.Title,
-        };
-    }
-}
