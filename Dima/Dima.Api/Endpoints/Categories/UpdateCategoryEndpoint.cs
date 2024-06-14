@@ -6,24 +6,26 @@ using Dima.Core.Responses;
 
 namespace Dima.Api.Endpoints.Categories;
 
-public class CreateCategoryEndpoint : IEndpoint
+public class UpdateCategoryEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
-    => app.MapPost("/", HandlerAsync)
-        .WithName("Categories: Create")
-        .WithSummary("Create new category")
-        .WithDescription("Create new category")
-        .WithOrder(1)
+    => app.MapPut("/{id}", HandlerAsync)
+        .WithName("Categories: Update")
+        .WithSummary("Update a category")
+        .WithDescription("Update a category")
+        .WithOrder(2)
         .Produces<ResponseBase<Category?>>();
 
     private static async Task<IResult> HandlerAsync(
+        long id,
         ICategoryHandler handler,
-        CreateCategoryRequest request) 
+        UpdateCategoryRequest request) 
     {
         request.UserId = "teste@teste.com";
-        var result = await handler.CreateAsync(request);
+        request.Id = id;
+        var result = await handler.UpdateAsync(request);
         return result.IsSuccess
-            ? TypedResults.Created($"/{result.Data?.Id}", result)
+            ? TypedResults.Ok(result)
             : TypedResults.BadRequest(result);
     }
 }
