@@ -26,6 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(
 
 
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
+builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 
 builder.Services
     .AddAuthentication(IdentityConstants.ApplicationScheme)
