@@ -1,5 +1,6 @@
 ﻿using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
+using Dima.Api.Endpoints.Transactions;
 
 namespace Dima.Api.Endpoints;
 
@@ -16,8 +17,18 @@ public static class EndpointBase
             .MapEndpoint<UpdateCategoryEndpoint>()
             .MapEndpoint<DeleteCategoryEndpoint>()
             .MapEndpoint<GetAllCategoryEndpoint>()
-            .MapEndpoint<GetByIdCategoryEndpoint>()
+            .MapEndpoint<GetByIdCategoryEndpoint>();
+
+        endpoints.MapGroup("v1/transactions")
+            .WithTags("Transactions")
+            //.RequireAuthorization()
+            .MapEndpoint<CreateTransactionEndpoint>()
+            .MapEndpoint<UpdateTransactionEndpoint>()
+            .MapEndpoint<DeleteTransactionEndpoint>()
+            .MapEndpoint<GetByPeriodTransactionEndpoint>()
+            .MapEndpoint<GetByIdTransactionEndpoint>()
             ;
+
     }
 
     private static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)
