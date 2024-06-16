@@ -7,3 +7,6 @@ Packages
 Microsoft.EntityFrameworkCore.Design
 Microsoft.EntityFrameworkCore.SqlServer
 Swashbuckle.AspNetCore
+
+https://mudblazor.com/
+dotnet new blazorwasm -o Dima.Web --pwa
