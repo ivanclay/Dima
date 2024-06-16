@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Endpoints.Transactions;
 
@@ -17,14 +18,15 @@ public class DeleteTransactionEndpoint : IEndpoint
         .Produces<ResponseBase<Transaction?>>();
 
     private static async Task<IResult> HandlerAsync(
+        ClaimsPrincipal user,
         long id,
         ITransactionHandler handler) 
     {
         var request = new DeleteTransactionRequest 
         { 
             Id = id,
-            UserId = "teste@teste.com"
-        };
+            UserId = user.Identity?.Name ?? string.Empty
+    };
         
         var result = await handler.DeleteAsync(request);
         return result.IsSuccess
