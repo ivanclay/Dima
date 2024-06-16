@@ -3,6 +3,7 @@ using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Categories;
 using Dima.Core.Responses;
+using System.Security.Claims;
 
 namespace Dima.Api.Endpoints.Categories;
 
@@ -17,13 +18,14 @@ public class GetByIdCategoryEndpoint : IEndpoint
         .Produces<ResponseBase<Category?>>();
 
     private static async Task<IResult> HandlerAsync(
+        ClaimsPrincipal user,
         long id,
         ICategoryHandler handler) 
     {
         var request = new GetByIdCategoryRequest
         {
-            UserId = "teste@teste.com",
-            Id = id
+            UserId = user.Identity?.Name ?? string.Empty,
+        Id = id
 
         };
 
