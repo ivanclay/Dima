@@ -1,28 +1,28 @@
 ﻿using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
-using Dima.Core.Requests.Categories;
+using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
 using System.Security.Claims;
 
-namespace Dima.Api.Endpoints.Categories;
+namespace Dima.Api.Endpoints.Transactions;
 
-public class DeleteCategoryEndpoint : IEndpoint
+public class DeleteTransactionEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     => app.MapDelete("/{id}", HandlerAsync)
-        .WithName("Categories: Delete")
-        .WithSummary("Delete a category")
-        .WithDescription("Delete a category")
+        .WithName("Transactions: Delete")
+        .WithSummary("Delete a transaction")
+        .WithDescription("Delete a transaction")
         .WithOrder(3)
-        .Produces<ResponseBase<Category?>>();
+        .Produces<ResponseBase<Transaction?>>();
 
     private static async Task<IResult> HandlerAsync(
         ClaimsPrincipal user,
         long id,
-        ICategoryHandler handler) 
+        ITransactionHandler handler) 
     {
-        var request = new DeleteCategoryRequest 
+        var request = new DeleteTransactionRequest 
         { 
             Id = id,
             UserId = user.Identity?.Name ?? string.Empty

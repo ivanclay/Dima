@@ -1,27 +1,27 @@
 ﻿using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
-using Dima.Core.Requests.Categories;
+using Dima.Core.Requests.Transactions;
 using Dima.Core.Responses;
 using System.Security.Claims;
 
-namespace Dima.Api.Endpoints.Categories;
+namespace Dima.Api.Endpoints.Transactions;
 
-public class UpdateCategoryEndpoint : IEndpoint
+public class UpdateTransactionEndpoint : IEndpoint
 {
     public static void Map(IEndpointRouteBuilder app)
     => app.MapPut("/{id}", HandlerAsync)
-        .WithName("Categories: Update")
-        .WithSummary("Update a category")
-        .WithDescription("Update a category")
+        .WithName("Transactions: Update")
+        .WithSummary("Update a transaction")
+        .WithDescription("Update a transaction")
         .WithOrder(2)
-        .Produces<ResponseBase<Category?>>();
+        .Produces<ResponseBase<Transaction?>>();
 
     private static async Task<IResult> HandlerAsync(
         ClaimsPrincipal user,
         long id,
-        ICategoryHandler handler,
-        UpdateCategoryRequest request) 
+        ITransactionHandler handler,
+        UpdateTransactionRequest request) 
     {
         request.UserId = user.Identity?.Name ?? string.Empty;
         request.Id = id;
