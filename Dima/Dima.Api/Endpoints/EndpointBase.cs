@@ -38,7 +38,7 @@ public static class EndpointBase
 
         app.MapGroup("v1/identity")
             .WithTags("Identity")
-            .MapIdentityApi<User>();
+            .MapIdentityApi<Models.User>();
 
         app.MapGroup("v1/identity")
             .WithTags("Identity")
