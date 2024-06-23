@@ -12,6 +12,7 @@ Project FullStack Balta.io
 
 [] Swashbuckle.AspNetCore
 
-
+## Front Blazor
 https://mudblazor.com/
+
 [] dotnet new blazorwasm -o Dima.Web --pwa
