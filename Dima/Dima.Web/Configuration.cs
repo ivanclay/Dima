@@ -5,6 +5,8 @@ namespace Dima.Web;
 
 public static class Configuration
 {
+    public const string HttpClientName = "dima";
+
     public static MudTheme Theme = new MudTheme 
     {
         Typography = new()
