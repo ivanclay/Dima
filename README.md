@@ -2,17 +2,17 @@
 Project FullStack Balta.io
 
 ## Packages
-[x] [Microsoft.AspNetCore.Identity.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/)
+- [x] [Microsoft.AspNetCore.Identity.EntityFrameworkCore](https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.EntityFrameworkCore/)
 
-[x] [Microsoft.AspNetCore.OpenApi]()
+- [x] [Microsoft.AspNetCore.OpenApi]()
 
-[] Microsoft.EntityFrameworkCore.Design
+- [] Microsoft.EntityFrameworkCore.Design
 
-[] Microsoft.EntityFrameworkCore.SqlServer
+- [] Microsoft.EntityFrameworkCore.SqlServer
 
-[] Swashbuckle.AspNetCore
+- [] Swashbuckle.AspNetCore
 
 ## Front Blazor
 https://mudblazor.com/
 
-[] dotnet new blazorwasm -o Dima.Web --pwa
+- [] dotnet new blazorwasm -o Dima.Web --pwa
