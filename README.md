@@ -6,11 +6,14 @@ Project FullStack Balta.io
 
 - [x] [Microsoft.AspNetCore.OpenApi]()
 
-- [x] Microsoft.EntityFrameworkCore.Design
+- [x] [Microsoft.EntityFrameworkCore.Design]()
 
-- [x] Microsoft.EntityFrameworkCore.SqlServer
+- [x] [Microsoft.EntityFrameworkCore.SqlServer]()
 
-- [x] Swashbuckle.AspNetCore
+- [x] [Swashbuckle.AspNetCore]()
+
+- [x] [Microsoft.Extensions.Http]()
+- [x] [Microsoft.AspNetCore.Components.WebAssembly.Authentication]()
 
 ## Front Blazor
 https://mudblazor.com/
