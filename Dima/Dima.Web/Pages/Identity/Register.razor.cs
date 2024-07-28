@@ -9,8 +9,6 @@ namespace Dima.Web.Pages.Identity;
 public partial class RegisterPage : ComponentBase
 {
     #region DEPENDENCIES
-    public MudForm MudForm { get; set; }
-
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
 
