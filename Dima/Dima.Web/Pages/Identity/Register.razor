@@ -1,5 +1,6 @@
 ﻿@page "/register"
 @layout HeadlessLayout
+@inherits RegisterPage
 
 <PageTitle>Dima - Register</PageTitle>
 
@@ -11,7 +12,7 @@
                      alt="Dima - Controle Financeiro"
                      width="200" />
             </div>
-            <MudForm @ref="_mudForm">
+            <MudForm @ref="MudForm">
                 <MudTextField 
                     T="string"
                     Label="E-mail"
@@ -40,7 +41,3 @@
         </MudPaper>
     </MudItem>
 </MudGrid>
-
-@code {
-    MudForm? _mudForm;
-}
