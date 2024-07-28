@@ -6,7 +6,7 @@ using MudBlazor;
 
 namespace Dima.Web.Pages.Identity;
 
-public partial class RegisterPage : ComponentBase
+public partial class LoginPage : ComponentBase
 {
     #region DEPENDENCIES
     [Inject]
@@ -24,7 +24,7 @@ public partial class RegisterPage : ComponentBase
 
     #region PROPERTIES
     public bool IsBuzy { get; set; } = false;
-    public RegisterRequest InputModel { get; set; } = new();
+    public LoginRequest InputModel { get; set; } = new();
     #endregion
 
     #region OVERRIDES
@@ -50,12 +50,12 @@ public partial class RegisterPage : ComponentBase
 
         try
         {
-            var result = await Handler.RegisterAsync(InputModel);
+            var result = await Handler.LoginAsync(InputModel);
 
             if (result.IsSuccess)
             {
                 Snackbar.Add(result.Message, Severity.Success);
-                NavigationManager.NavigateTo("/login");
+                NavigationManager.NavigateTo("/");
             }
             else
                 Snackbar.Add(result.Message, Severity.Error);
@@ -71,4 +71,5 @@ public partial class RegisterPage : ComponentBase
     }
 
     #endregion
+
 }
