@@ -1,4 +1,5 @@
 ﻿using Dima.Core.Handlers;
+using Dima.Core.Requests.Account;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
@@ -20,7 +21,56 @@ public partial class RegisterPage : ComponentBase
     public NavigationManager NavigationManager { get; set; } = null!;
 
     [Inject]
-    public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+    public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
     #endregion
 
+    #region PROPERTIES
+    public bool IsBuzy { get; set; } = false;
+    public RegisterRequest InputModel { get; set; } = new();
+    #endregion
+
+    #region OVERRIDES
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+        var user = authState.User;
+
+        //Merge pattern
+        if (user.Identity is { IsAuthenticated: true })
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+    #endregion
+
+    #region METHODS
+
+    public async Task OnValidSubmitAsync()
+    {
+        IsBuzy = true;
+
+        try
+        {
+            var result = await Handler.RegisterAsync(InputModel);
+
+            if (result.IsSuccess)
+            {
+                Snackbar.Add(result.Message, Severity.Success);
+                NavigationManager.NavigateTo("/login");
+            }
+            else
+                Snackbar.Add(result.Message, Severity.Error);
+        }
+        catch (Exception e)
+        {
+            Snackbar.Add(e.Message, Severity.Error);
+        }
+        finally
+        {
+            IsBuzy = false;
+        }
+    }
+
+    #endregion
 }
