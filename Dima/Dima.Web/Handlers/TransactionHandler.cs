@@ -13,25 +13,27 @@ public class TransactionHandler(IHttpClientFactory httpClientFactory) : ITransac
     
     public async Task<ResponseBase<Transaction?>> CreateAsync(CreateTransactionRequest request)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ResponseBase<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ResponseBase<Transaction?>> GetByIdAsync(GetByIdTransactionRequest request)
-    {
-        throw new NotImplementedException();
+        var result = await _client.PostAsJsonAsync("v1/trasactions", request);
+        return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
+            ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível criar a transação");
     }
 
     public async Task<ResponseBase<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _client.PutAsJsonAsync($"v1/trasactions/{request.Id}", request);
+        return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
+            ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível atualizar a transação");
     }
 
+    public async Task<ResponseBase<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
+    {
+        var result = await _client.DeleteAsync($"v1/trasactions/{request.Id}");
+        return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
+            ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível excluir a transação");
+    }
 
+    public async Task<ResponseBase<Transaction?>> GetByIdAsync(GetByIdTransactionRequest request) => await _client.GetFromJsonAsync<ResponseBase<Transaction?>>($"v1/transactions/{request.Id}")
+            ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível obter a transação.");
     public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetByPeriodTransactionRequest request)
     {
         const string format = "yyyy-MM-dd";
