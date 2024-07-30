@@ -4,8 +4,9 @@
     @ref="_mudThemeProvider"
     @bind-IsDarkMode="_isDarkMode" 
     Theme="Configuration.Theme" />
-<MudSnackbarProvider />
 
+<MudSnackbarProvider />
+<MudDialogProvider />
 
 <AuthorizeView>
 
@@ -40,7 +41,7 @@
             </MudDrawer>
 
             <MudMainContent>
-                <MudContainer>
+                <MudContainer Class="mt-4">
                     @Body
                 </MudContainer>
             </MudMainContent>
