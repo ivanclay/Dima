@@ -20,6 +20,6 @@ public class UpdateTransactionRequest : RequestBase
     public long CategoryId { get; set; }
 
     [Required(ErrorMessage = "Invalid Date")]
-    public DateTime PaidOrReceivedAt { get; set; }
+    public DateTime? PaidOrReceivedAt { get; set; }
 
 }

@@ -136,10 +136,10 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                 .Transactions
                 .AsNoTracking()
                 .Where(t => 
-                        t.CreatedAt >= request.StartDate &&
-                        t.CreatedAt <= request.EndDate && 
+                        t.PaidOrReceivedAt >= request.StartDate &&
+                        t.PaidOrReceivedAt <= request.EndDate && 
                         t.UserId == request.UserId)
-                .OrderBy(t => t.CreatedAt);
+                .OrderBy(t => t.PaidOrReceivedAt);
 
             var transactions = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
