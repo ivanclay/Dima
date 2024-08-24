@@ -1,5 +1,6 @@
 ﻿using Dima.Api.Data;
 using Dima.Core.Common.Extensions;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -12,6 +13,11 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
 {
     public async Task<ResponseBase<Transaction?>> CreateAsync(CreateTransactionRequest request)
     {
+        if (request is { Type: ETransactionType.Withdraw, Amount: >= 0 }) 
+        {
+            request.Amount *= -1;
+        }
+
         try
         {
             var transaction = new Transaction 
@@ -38,6 +44,11 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
 
     public async Task<ResponseBase<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
+        if (request is { Type: ETransactionType.Withdraw, Amount: >= 0 })
+        {
+            request.Amount *= -1;
+        }
+
         try
         {
             var transaction = await context
@@ -107,7 +118,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         }
     }
 
-    public async Task<PagedResponse<List<Transaction>>> GetByPeriodAsync(GetByPeriodTransactionRequest request)
+    public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetByPeriodTransactionRequest request)
     {
         try
         {
@@ -125,10 +136,10 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                 .Transactions
                 .AsNoTracking()
                 .Where(t => 
-                        t.CreatedAt >= request.StartDate &&
-                        t.CreatedAt <= request.EndDate && 
+                        t.PaidOrReceivedAt >= request.StartDate &&
+                        t.PaidOrReceivedAt <= request.EndDate && 
                         t.UserId == request.UserId)
-                .OrderBy(t => t.CreatedAt);
+                .OrderBy(t => t.PaidOrReceivedAt);
 
             var transactions = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)
