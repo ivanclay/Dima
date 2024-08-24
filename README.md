@@ -21,3 +21,4 @@ https://mudblazor.com/
 - [x] dotnet new blazorwasm -o Dima.Web --pwa
 - [x] dotnet workload install wasm-tools
 - [ ] dotnet workload update
+- [x] BlazorWebAssemblyLoadAllGlobalizationData on Blazor Web Project
