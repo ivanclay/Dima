@@ -4,29 +4,54 @@
     @ref="_mudThemeProvider"
     @bind-IsDarkMode="_isDarkMode" 
     Theme="Configuration.Theme" />
-<MudSnackbarProvider />
 
+<MudSnackbarProvider />
+<MudDialogProvider />
 
 <AuthorizeView>
 
     <Authorized>
         <MudLayout>
+
             <MudAppBar>
+                <MudIconButton 
+                    Icon="@Icons.Material.Filled.Menu"
+                    Color="Color.Inherit"
+                    Edge="Edge.Start"
+                    OnClick="() => ToggleDrawer()"/>
                 Dima
+                <MudSpacer />
+
+                <MudButton Href="/lancamentos/novo"
+                           Variant="Variant.Text" StartIcon="@Icons.TwoTone.Add">
+                    NOVO LANÇAMENTO
+                </MudButton>
                 <MudSpacer />
 
                 <MudText Typo="Typo.caption">
                     @context.User.Identity?.Name
                 </MudText>
 
-                <MudSwitch @bind-Value="@_isDarkMode" />
+                <MudSwitch 
+                    Color="Color.Inherit"
+                    Class="ma-4"
+                    T="bool"
+                    ThumbIcon="@Icons.TwoTone.Lightbulb"
+                    @bind-Value="@_isDarkMode" 
+                />
             </MudAppBar>
 
+            <MudDrawer 
+                @bind-Open="@_isDrawerOpened">
+                <NavMenu />
+            </MudDrawer>
+
             <MudMainContent>
-                <MudContainer>
+                <MudContainer Class="mt-4">
                     @Body
                 </MudContainer>
             </MudMainContent>
+
         </MudLayout>
     </Authorized>
 
@@ -41,6 +66,7 @@
 
 @code {
     private bool _isDarkMode = true;
+    private bool _isDrawerOpened = true;
     private MudThemeProvider _mudThemeProvider = null!;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -59,4 +85,6 @@
         StateHasChanged();
         return Task.CompletedTask;
     }
+
+    private void ToggleDrawer() => _isDrawerOpened = !_isDrawerOpened;
 }

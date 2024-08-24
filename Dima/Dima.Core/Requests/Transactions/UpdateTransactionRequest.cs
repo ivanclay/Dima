@@ -11,7 +11,7 @@ public class UpdateTransactionRequest : RequestBase
     public string Title { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Invalid Type")]
-    public ETtransactionType Type { get; set; }
+    public ETransactionType Type { get; set; }
 
     [Required(ErrorMessage = "Invalid amount")]
     public decimal Amount { get; set; }
@@ -20,6 +20,6 @@ public class UpdateTransactionRequest : RequestBase
     public long CategoryId { get; set; }
 
     [Required(ErrorMessage = "Invalid Date")]
-    public DateTime PaidOrReceivedAt { get; set; }
+    public DateTime? PaidOrReceivedAt { get; set; }
 
 }
