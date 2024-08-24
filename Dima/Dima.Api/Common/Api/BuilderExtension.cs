@@ -87,6 +87,7 @@ public static class BuilderExtension
     {
         builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
         builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
+        builder.Services.AddTransient<IReportHandler, ReportHandler>();
 
     }
 }
