@@ -13,7 +13,6 @@ public partial class CreateTransactionPage : ComponentBase
 
     public bool IsBusy { get; set; } = false;
     public CreateTransactionRequest InputModel { get; set; } = new();
-    //public DateTime Data {  get; set; }
     public List<Category> Categories { get; set; } = [];
 
     #endregion

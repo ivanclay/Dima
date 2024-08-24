@@ -13,21 +13,21 @@ public class TransactionHandler(IHttpClientFactory httpClientFactory) : ITransac
     
     public async Task<ResponseBase<Transaction?>> CreateAsync(CreateTransactionRequest request)
     {
-        var result = await _client.PostAsJsonAsync("v1/trasactions", request);
+        var result = await _client.PostAsJsonAsync("v1/transactions", request);
         return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
             ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível criar a transação");
     }
 
     public async Task<ResponseBase<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
-        var result = await _client.PutAsJsonAsync($"v1/trasactions/{request.Id}", request);
+        var result = await _client.PutAsJsonAsync($"v1/transactions/{request.Id}", request);
         return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
             ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível atualizar a transação");
     }
 
     public async Task<ResponseBase<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
     {
-        var result = await _client.DeleteAsync($"v1/trasactions/{request.Id}");
+        var result = await _client.DeleteAsync($"v1/transactions/{request.Id}");
         return await result.Content.ReadFromJsonAsync<ResponseBase<Transaction?>>()
             ?? new ResponseBase<Transaction?>(null, 400, "Não foi possível excluir a transação");
     }
