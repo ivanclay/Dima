@@ -1,5 +1,9 @@
+-- ***** VOUCHERS ********
+INSERT INTO Voucher VALUES ('1234ABCD', 'Voucher de Teste', 'Testando', 1, 9.90)
+
 -- ***** PRODUCTS ********
 INSERT INTO [dbo].[Product] VALUES ('Plano Anual', '1 ano de acesso a plataforma', 'plano-anual',1 , 779.90);
+
 -- ***** CATEGORIES ********
 
 INSERT INTO [dbo].[Category] (Title, Description, UserId) VALUES ('Alimentação', 'Despesas com alimentos e bebidas', 'teste@balta.io');

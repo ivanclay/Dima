@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dima.Api.Handlers;
 
-public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : IOrderHandler
+public class OrderHandler(AppDbContext context) : IOrderHandler
 {
     public async Task<ResponseBase<Order?>> CancelAsync(CancelOrderRequest request)
     {
@@ -18,6 +18,7 @@ public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : 
             order = await context
                 .Orders
                 .Include(x => x.Product)
+                .Include(x => x.Voucher)
                 .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
             if (order is null)
@@ -221,6 +222,7 @@ public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : 
             order = await context
                 .Orders
                 .Include(x => x.Product)
+                .Include(x => x.Voucher)
                 .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
 
             if (order is null)
