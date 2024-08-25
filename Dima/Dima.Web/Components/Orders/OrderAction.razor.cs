@@ -12,19 +12,25 @@ public partial class OrderActionComponent : ComponentBase
 {
     #region Parameters
 
-    [CascadingParameter] public DetailsPage Parent { get; set; } = null!;
+    [CascadingParameter]
+    public DetailsPage Parent { get; set; } = null!;
 
-    [Parameter, EditorRequired] public Order Order { get; set; } = null!;
+    [Parameter, EditorRequired]
+    public Order Order { get; set; } = null!;
 
     #endregion
 
     #region Services
 
-    [Inject] public IJSRuntime JsRuntime { get; set; } = null!;
-    [Inject] private IDialogService DialogService { get; set; } = null!;
-    [Inject] private IOrderHandler OrderHandler { get; set; } = null!;
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IOrderHandler OrderHandler { get; set; } = null!;
     //[Inject] public IStripeHandler StripeHandler { get; set; } = null!;
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
     #endregion
 
@@ -91,6 +97,9 @@ public partial class OrderActionComponent : ComponentBase
 
     private async Task PayOrderAsync()
     {
+        await Task.Delay(1);
+        Snackbar.Add("Pagamento não implementado", Severity.Error);
+
         //var request = new CreateSessionRequest
         //{
         //    OrderNumber = Order.Number,
