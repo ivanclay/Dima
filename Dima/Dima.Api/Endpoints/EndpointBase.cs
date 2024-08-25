@@ -1,11 +1,10 @@
 ﻿using Dima.Api.Common.Api;
 using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
+using Dima.Api.Endpoints.Orders;
 using Dima.Api.Endpoints.Reports;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models;
-using Dima.Core.Requests.Reports;
-using Microsoft.AspNetCore.Routing.Matching;
 
 namespace Dima.Api.Endpoints;
 
@@ -36,8 +35,27 @@ public static class EndpointBase
             .MapEndpoint<UpdateTransactionEndpoint>()
             .MapEndpoint<DeleteTransactionEndpoint>()
             .MapEndpoint<GetByPeriodTransactionEndpoint>()
-            .MapEndpoint<GetByIdTransactionEndpoint>()
-            ;
+            .MapEndpoint<GetByIdTransactionEndpoint>();
+
+        endpoints.MapGroup("v1/products")
+            .WithTags("Products")
+            .MapEndpoint<GetAllProductsEndpoint>()
+            .MapEndpoint<GetProductBySlugEndpoint>();
+
+        endpoints.MapGroup("v1/vouchers")
+            .WithTags("Vouchers")
+            .RequireAuthorization()
+            .MapEndpoint<GetVoucherByNumberEndpoint>();
+
+        endpoints.MapGroup("v1/orders")
+            .WithTags("Orders")
+            .RequireAuthorization()
+            .MapEndpoint<GetAllOrdersEndpoint>()
+            .MapEndpoint<GetOrderByNumberEndpoint>()
+            .MapEndpoint<CreateOrderEndpoint>()
+            .MapEndpoint<CancelOrderEndpoint>()
+            .MapEndpoint<PayOrderEndpoint>()
+            .MapEndpoint<RefundOrderEndpoint>();
 
         app.MapGroup("v1/identity")
             .WithTags("Identity")
