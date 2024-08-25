@@ -1,0 +1,25 @@
+﻿@using Dima.Core.Enums
+@inherits OrderStatusComponent
+
+@switch (Status)
+{
+    case EOrderStatus.Canceled:
+        <MudChip Color="Color.Error">CANCELADO</MudChip>
+        break;
+
+    case EOrderStatus.Paid:
+        <MudChip Color="Color.Success">PAGO</MudChip>
+        break;
+
+    case EOrderStatus.Refunded:
+        <MudChip Color="Color.Info">ESTORNADO</MudChip>
+        break;
+
+    case EOrderStatus.WaitingPayment:
+        <MudChip Color="Color.Warning">AGUARDANDO PAGAMENTO</MudChip>
+        break;
+
+    default:
+        <MudChip Color="Color.Info">Indefinido</MudChip>
+        break;
+}
