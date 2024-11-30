@@ -30,6 +30,8 @@ Project FullStack Balta.io
 - [x] [Microsoft.Extensions.Http]()
 - [x] [Microsoft.AspNetCore.Components.WebAssembly.Authentication]()
 
+- [x] [Stripe.net](https://www.nuget.org/profiles/stripe?_src=template)
+
 ## Frontend Blazor
 https://mudblazor.com/
 
